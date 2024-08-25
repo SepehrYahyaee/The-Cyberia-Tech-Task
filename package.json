@@ -1,0 +1,22 @@
+{
+  "name": "the-cyberia-tech-task",
+  "version": "1.0.0",
+  "description": "A simple blog platform with only users and posts.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --watch --env-file=.env app.js"
+  },
+  "keywords": [
+    "Blog"
+  ],
+  "author": "Sepehr Yahyaee",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0"
+  }
+}
