@@ -2,6 +2,8 @@ import express from "express";
 import { userRoutes, postRoutes } from "./routes/index.js";
 import { globalErrorHandler, logger } from "./utilities/index.js";
 import morgan from "morgan";
+import YAML from 'yamljs';
+import swaggerUi from 'swagger-ui-express';
 
 // Main app instance
 const app = express();
@@ -18,6 +20,10 @@ app.use("/api/post", postRoutes);
 
 // Default route (localhost:PORT/)
 app.get("/", (req, res) => { return res.status(200).send("Welcome!") });
+
+// Swagger API documentation
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Global error handling
 app.use(globalErrorHandler);
