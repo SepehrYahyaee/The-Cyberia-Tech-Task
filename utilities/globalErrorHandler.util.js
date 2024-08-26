@@ -1,5 +1,5 @@
 import * as pkg from "@prisma/client";
-import { AppError } from "./index.js";
+import { AppError, logger } from "./index.js";
 
 const PrismaClientKnownRequestError = pkg.Prisma.PrismaClientKnownRequestError;
 const PrismaClientValidationError = pkg.Prisma.PrismaClientValidationError;
@@ -8,6 +8,8 @@ export function globalErrorHandler(error, req, res, next) {
     if (error instanceof AppError){
         error.statusCode = error.statusCode || 500;
         error.status = error.status || "error";
+
+        logger.error(`Error: ${error.message}`);
 
         res.status(error.statusCode).send({
             status: error.statusCode,
@@ -20,6 +22,9 @@ export function globalErrorHandler(error, req, res, next) {
             code: error.code,
             message: error.message
         }
+
+        logger.error(`Error: ${error.message}`);
+
         res.status(500).send(errorMessage);
     } else if (error instanceof PrismaClientValidationError) {
         const errorMessage = {
@@ -27,8 +32,13 @@ export function globalErrorHandler(error, req, res, next) {
             code: error.code,
             message: error.message
         }
+
+        logger.error(`Error: ${error.message}`);
+
         res.status(500).send(errorMessage);
     } else {
+        logger.error(`Error: ${error.message}`);
+
         res.status(500).send({msg: error.message, stack: error.stack});
     }
 }
