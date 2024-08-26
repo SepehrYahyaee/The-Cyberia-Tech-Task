@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "db": "npx prisma migrate dev --name init && node ./prisma/seeds.js",
     "test": "node --watch --env-file=.env app.js"
   },
   "keywords": [
