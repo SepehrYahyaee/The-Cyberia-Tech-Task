@@ -38,7 +38,7 @@ export function globalErrorHandler(error, req, res, next) {
         res.status(500).send(errorMessage);
     } else {
         logger.error(`Error: ${error.message}`);
-
+        console.log(error);
         res.status(500).send({msg: error.message, stack: error.stack});
     }
 }

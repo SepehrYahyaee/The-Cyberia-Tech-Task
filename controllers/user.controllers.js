@@ -20,7 +20,7 @@ export class UserController {
 
         // Check if the passwords match
         const checkPassword = await verify(user.password, req.body.password);
-        if (!checkPassword) throw new Error("Username or password does not match!", 400);
+        if (!checkPassword) throw new AppError("Username or password does not match!", 400);
 
         // If it matches, provide with the access token.
         res.status(200).send(await createToken({ id: user.id }, process.env.SECRET_KEY, process.env.ACCESS_TOKEN_EXPIRE_TIME));
